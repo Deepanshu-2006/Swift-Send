@@ -1,6 +1,9 @@
 import React from 'react';
 import Header from './_components/Header';
 import Hero from './_components/Hero';
+import Features from './_components/Features';
+import AboutUs from './_components/AboutUs';
+import ContactUs from './_components/ContactUs';
 
 export default function Home() {
   return (
@@ -9,6 +12,9 @@ export default function Home() {
       
       <Header/>
       <Hero/>
+      <Features/>
+      <AboutUs/>
+      <ContactUs/>
     </div>
   );
 }

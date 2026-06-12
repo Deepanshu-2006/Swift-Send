@@ -5,7 +5,7 @@ import { Show } from '@clerk/nextjs'
 
 function Hero() {
     return (
-        <div>
+        <div id="home">
             <section className="lg:grid lg:h-screen lg:place-content-center">
                 <div className="mx-auto w-screen max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32">
                     <div className="max-w-prose text-left">
@@ -50,7 +50,7 @@ function Hero() {
                                 </Link>
                             </Show>
 
-                            <a href="#_" className="rounded-lg relative inline-flex group items-center justify-center px-3.5 py-3 m-1 cursor-pointer border-b-4 border-l-2 shadow-lg bg-primary border-primary font-bold text-white">
+                            <a href="#features" className="rounded-lg relative inline-flex group items-center justify-center px-3.5 py-3 m-1 cursor-pointer border-b-4 border-l-2 shadow-lg bg-primary border-primary font-bold text-white">
                                 <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-32 group-hover:h-32 hover:font-extrabold opacity-10"></span>
                                 <span className="relative">Learn More</span>
                             </a>

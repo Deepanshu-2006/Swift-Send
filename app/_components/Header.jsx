@@ -5,35 +5,135 @@ import Link from 'next/link'
 import { Show, UserButton } from '@clerk/nextjs'
 
 function Header() {
+  const [activeSection, setActiveSection] = React.useState('home');
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  React.useEffect(() => {
+    if (window.location.pathname !== '/') {
+      setActiveSection('');
+      return;
+    }
+
+    const sectionIds = ['home', 'features', 'about', 'contact'];
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -40% 0px',
+      threshold: 0.05
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          setActiveSection(id);
+          
+          // Dynamically replace the browser URL path/hash without page jump or history pollution
+          if (typeof window !== 'undefined') {
+            const hash = id === 'home' ? '/' : `/#${id}`;
+            window.history.replaceState(null, '', hash);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div>
 
-      <header className="border-b bg-transparent mx-10 absolute inset-x-0 top-0 z-50 h-18">
-        <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_2px,transparent_2px),linear-gradient(to_bottom,#8080800a_2px,transparent_2px)] bg-size-[14px_24px]"></div>
-        <div className="mx-auto  flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8 ">
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 flex items-center ${
+        isScrolled 
+          ? 'bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm h-16 mx-0' 
+          : 'bg-transparent border-b border-transparent h-18 ml-10 mr-6'
+      }`}>
+        {!isScrolled && (
+          <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_2px,transparent_2px),linear-gradient(to_bottom,#8080800a_2px,transparent_2px)] bg-size-[14px_24px] rounded-r-2xl"></div>
+        )}
+        <div className="flex h-full w-full items-center justify-between gap-8 px-4 sm:px-6 lg:pl-8 lg:pr-4">
 
-          <div className="flex items-center ">
-            <Image src='/logo.svg' width={80} height={50} alt='logo' unoptimized />
-            <span className='text-2xl text-cyan-700 text-shadow-cyan-500 font-extrabold font-serif font-stretch-95% '>Swift Send</span>
-          </div>
+          <Link href="/" className="flex items-center shrink-0">
+            <Image src='/logo.svg' width={48} height={30} alt='logo' className="shrink-0" unoptimized />
+            <span className='text-2xl text-cyan-700 text-shadow-cyan-500 font-extrabold font-serif font-stretch-95% whitespace-nowrap ml-2'>Swift Send</span>
+          </Link>
 
           <div className="flex flex-1 items-center justify-end md:justify-between">
             <nav aria-label="Global" className="hidden md:block">
-              <ul className="flex items-center gap-6 text-l font-bold">
+              <ul className="flex items-center gap-6 text-sm font-bold">
                 <li>
-                  <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> Home </a>
+                  <Link 
+                    className={`transition-colors duration-200 ${
+                      activeSection === 'home' 
+                        ? 'text-primary' 
+                        : 'text-gray-500 hover:text-primary'
+                    }`} 
+                    href="/"
+                  > 
+                    Home 
+                  </Link>
                 </li>
 
                 <li>
-                  <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> Upload </a>
+                  <Link className="text-gray-500 transition hover:text-primary" href="/upload"> Upload </Link>
                 </li>
 
                 <li>
-                  <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> About Us </a>
+                  <Link 
+                    className={`transition-colors duration-200 ${
+                      activeSection === 'features' 
+                        ? 'text-primary' 
+                        : 'text-gray-500 hover:text-primary'
+                    }`} 
+                    href="/#features"
+                  > 
+                    Features 
+                  </Link>
                 </li>
 
                 <li>
-                  <a className="text-gray-500 transition hover:text-gray-500/75" href="#"> Contact Us </a>
+                  <Link 
+                    className={`transition-colors duration-200 ${
+                      activeSection === 'about' 
+                        ? 'text-primary' 
+                        : 'text-gray-500 hover:text-primary'
+                    }`} 
+                    href="/#about"
+                  > 
+                    About Us 
+                  </Link>
+                </li>
+
+                <li>
+                  <Link 
+                    className={`transition-colors duration-200 ${
+                      activeSection === 'contact' 
+                        ? 'text-primary' 
+                        : 'text-gray-500 hover:text-primary'
+                    }`} 
+                    href="/#contact"
+                  > 
+                    Contact Us 
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -53,7 +153,7 @@ function Header() {
                 </Show>
 
                 <Show when="signed-in">
-                  <div className="ml-8 mt-1 flex scale-155 items-end origin-center">
+                  <div className="ml-8 mt-1 flex scale-155 items-end origin-right mr-3">
                     <UserButton afterSignOutUrl="/" />
                   </div>
                 </Show>
