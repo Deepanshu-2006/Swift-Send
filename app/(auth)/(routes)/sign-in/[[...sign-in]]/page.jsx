@@ -15,15 +15,15 @@ export default function Page() {
     return (
         <main className="relative h-screen w-screen overflow-hidden bg-[linear-gradient(180deg,#f7fbff_0%,#eef7ff_55%,#ffffff_100%)] flex items-center justify-center p-4 sm:p-6 lg:p-8">
             {/* Grid overlay & blur decoration */}
-            <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#c6d6e61f_1px,transparent_1px),linear-gradient(to_bottom,#c6d6e61f_1px,transparent_1px)] bg-[size:22px_22px]" />
+            <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#c6d6e61f_1px,transparent_1px),linear-gradient(to_bottom,#c6d6e61f_1px,transparent_1px)] bg-size-[22px_22px]" />
             <div className="absolute -left-40 -top-32 -z-10 h-72 w-72 rounded-full bg-sky-200/40 blur-3xl" />
             <div className="absolute -bottom-32 -right-24 -z-10 h-80 w-80 rounded-full bg-cyan-100 blur-3xl" />
 
-            <div className="flex w-full max-w-5xl h-[calc(100vh-4rem)] max-h-[720px] min-h-[580px] overflow-hidden rounded-[36px] border border-slate-200/80 bg-white/85 shadow-[0_30px_90px_rgba(15,23,42,0.12)] backdrop-blur">
+            <div className="flex w-full max-w-5xl h-[calc(100vh-4rem)] max-h-180 min-h-145 overflow-hidden rounded-[36px] border border-slate-200/80 bg-white/85 shadow-[0_30px_90px_rgba(15,23,42,0.12)] backdrop-blur">
                 {/* Left side: branding/illustration */}
                 <section className="relative hidden lg:flex lg:w-1/2 h-full flex-col justify-between overflow-hidden bg-[linear-gradient(155deg,#041a31_0%,#0a3357_42%,#0b6ec0_100%)] p-8 text-white xl:p-10">
                     <div className="absolute inset-0 opacity-20">
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-[size:34px_34px]" />
+                        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.18)_1px,transparent_1px)] bg-size-[34px_34px]" />
                     </div>
                     <div className="absolute -right-20 -top-16 h-44 w-44 rounded-full bg-cyan-300/25 blur-3xl" />
                     <div className="absolute -bottom-20 -left-12 h-56 w-56 rounded-full bg-sky-400/20 blur-3xl" />
@@ -80,7 +80,7 @@ export default function Page() {
                             height={220}
                             priority
                             unoptimized
-                            className="h-auto w-full max-w-[200px] xl:max-w-[240px]"
+                            className="h-auto w-full max-w-50 xl:max-w-60"
                         />
                     </div>
                 </section>
@@ -103,7 +103,7 @@ export default function Page() {
                     </div>
 
                     {/* Centered card and info */}
-                    <div className="my-auto mx-auto w-full max-w-[380px] flex flex-col py-4">
+                    <div className="my-auto mx-auto w-full max-w-95 flex flex-col py-4">
                         <div className="mb-4">
                             <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-primary">
                                 Welcome Back
@@ -154,7 +154,7 @@ export default function Page() {
                                     }}
                                 />
                             ) : (
-                                <div className="flex flex-col items-center justify-center space-y-3 py-6 border border-slate-200/80 rounded-2xl bg-white shadow-sm min-h-[300px]">
+                                <div className="flex flex-col items-center justify-center space-y-3 py-6 border border-slate-200/80 rounded-2xl bg-white shadow-sm min-h-75">
                                     <div className="h-6 w-6 animate-spin rounded-full border-3 border-slate-200 border-t-primary" />
                                     <p className="text-[10px] text-slate-400 animate-pulse font-medium">Securing session...</p>
                                 </div>
