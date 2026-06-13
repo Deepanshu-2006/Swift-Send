@@ -7,6 +7,7 @@ import { Show, UserButton } from '@clerk/nextjs'
 function Header() {
   const [activeSection, setActiveSection] = React.useState('home');
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -160,16 +161,80 @@ function Header() {
 
               </div>
 
-              <button className="block rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="block rounded-lg bg-slate-100 p-2.5 text-gray-600 hover:bg-slate-200 transition md:hidden z-50 relative"
+              >
                 <span className="sr-only">Toggle menu</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
+                {isMenuOpen ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                )}
               </button>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile Drawer Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center animate-fade-in md:hidden">
+          <ul className="flex flex-col items-center gap-8 text-xl font-bold">
+            <li>
+              <Link 
+                onClick={() => setIsMenuOpen(false)}
+                className={`transition-colors duration-200 ${
+                  activeSection === 'home' ? 'text-primary' : 'text-gray-500 hover:text-primary'
+                }`} 
+                href="/"
+              > 
+                Home 
+              </Link>
+            </li>
+            <li>
+              <Link onClick={() => setIsMenuOpen(false)} className="text-gray-500 transition hover:text-primary" href="/upload"> Upload </Link>
+            </li>
+            <li>
+              <Link 
+                onClick={() => setIsMenuOpen(false)}
+                className={`transition-colors duration-200 ${
+                  activeSection === 'features' ? 'text-primary' : 'text-gray-500 hover:text-primary'
+                }`} 
+                href="/#features"
+              > 
+                Features 
+              </Link>
+            </li>
+            <li>
+              <Link 
+                onClick={() => setIsMenuOpen(false)}
+                className={`transition-colors duration-200 ${
+                  activeSection === 'about' ? 'text-primary' : 'text-gray-500 hover:text-primary'
+                }`} 
+                href="/#about"
+              > 
+                About Us 
+              </Link>
+            </li>
+            <li>
+              <Link 
+                onClick={() => setIsMenuOpen(false)}
+                className={`transition-colors duration-200 ${
+                  activeSection === 'contact' ? 'text-primary' : 'text-gray-500 hover:text-primary'
+                }`} 
+                href="/#contact"
+              > 
+                Contact Us 
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   )
 }

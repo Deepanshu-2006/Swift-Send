@@ -56,7 +56,7 @@ function Hero() {
                             </a>
                         </div>
                     </div>
-                    <Image src='/Image.svg' width={800} height={270} alt='Hero Illustration' unoptimized />
+                    <Image src='/Image.svg' width={800} height={270} alt='Hero Illustration' className="w-full h-auto max-w-[500px] md:max-w-full mx-auto mt-8 md:mt-0" unoptimized />
                 </div>
             </section>
         </div>
