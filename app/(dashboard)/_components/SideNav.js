@@ -30,9 +30,9 @@ function SideNav() {
 
     return (
         <div className="w-full">
-            <Link href="/" className='flex items-center gap-3 p-5 border-b border-gray-200 hover:opacity-90 transition-opacity cursor-pointer'>
+            <Link href="/" className='flex items-center gap-3 p-5 pr-12 md:pr-5 border-b border-gray-200 hover:opacity-90 transition-opacity cursor-pointer'>
                 <Image src='/logo.svg' width={48} height={30} alt='logo' className="shrink-0" unoptimized />
-                <span className='text-2xl text-cyan-700 text-shadow-cyan-500 font-extrabold font-serif font-stretch-95% whitespace-nowrap'>Swift Send</span>
+                <span className='text-xl md:text-2xl text-cyan-700 text-shadow-cyan-500 font-extrabold font-serif font-stretch-95% whitespace-nowrap'>Swift Send</span>
             </Link>
             <div className='flex flex-col mt-8 font-bold w-full'>
                 {menuList.map((item) => {

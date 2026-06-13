@@ -1,10 +1,15 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { User, Lock, Mail, Settings, Key, Calendar } from 'lucide-react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-function SettingsPage() {
+function SettingsContent() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const redirectUrl = searchParams.get('redirect');
+
     const [uploaderName, setUploaderName] = useState('')
     const [sharingNote, setSharingNote] = useState('')
     const [expirationTime, setExpirationTime] = useState('none')
@@ -31,6 +36,12 @@ function SettingsPage() {
             localStorage.setItem('swift_share_default_password', isPasswordEnabled ? defaultPassword : '')
             
             toast.success("Settings Saved Successfully!")
+            
+            if (redirectUrl) {
+                setTimeout(() => {
+                    router.push(redirectUrl);
+                }, 1200);
+            }
         } catch (error) {
             console.error("Failed to save settings to localStorage:", error)
             toast.error("Failed to save settings.")
@@ -100,7 +111,7 @@ function SettingsPage() {
                         {/* Expiration Default select */}
                         <div className="hidden">
                             <label className="text-sm font-bold text-gray-600 block mb-2">Default Expiration Period</label>
-                            <div className="flex items-center gap-2.5 bg-white border border-gray-305 rounded-xl px-4 py-3 shadow-sm max-w-xs">
+                            <div className="flex items-center gap-2.5 bg-white border border-gray-355 rounded-xl px-4 py-3 shadow-sm max-w-xs">
                                 <Calendar className="w-5 h-5 text-gray-400 shrink-0" />
                                 <select 
                                     value={expirationTime}
@@ -127,7 +138,7 @@ function SettingsPage() {
                                     }}
                                     className="w-4 h-4 text-primary rounded focus:ring-primary"
                                 />
-                                <span className="text-sm font-bold text-gray-650">Enable Password Protection by Default</span>
+                                <span className="text-sm font-bold text-gray-655">Enable Password Protection by Default</span>
                             </label>
 
                             {isPasswordEnabled && (
@@ -149,11 +160,20 @@ function SettingsPage() {
                     </div>
                 </div>
 
-                {/* Save settings action button */}
-                <div className="pt-4 flex justify-end">
+                {/* Action buttons */}
+                <div className="pt-4 flex justify-end gap-3">
+                    {redirectUrl && (
+                        <button 
+                            type="button"
+                            onClick={() => router.push(redirectUrl)}
+                            className="bg-slate-100 hover:bg-slate-200 text-gray-700 font-bold py-3 px-6 rounded-xl transition text-sm text-center cursor-pointer"
+                        >
+                            Cancel
+                        </button>
+                    )}
                     <button 
                         onClick={handleSave}
-                        className="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm text-center"
+                        className="bg-primary hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-md transition text-sm text-center cursor-pointer"
                     >
                         Save Settings
                     </button>
@@ -165,4 +185,14 @@ function SettingsPage() {
     )
 }
 
-export default SettingsPage
+export default function SettingsPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <p className="text-primary font-bold text-lg animate-pulse">Loading settings...</p>
+            </div>
+        }>
+            <SettingsContent />
+        </Suspense>
+    )
+}

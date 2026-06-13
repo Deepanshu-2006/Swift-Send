@@ -6,6 +6,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useUser } from '@clerk/nextjs';
 import app from '../../../../FirebaseConfig';
 import { useRouter } from 'next/navigation';
+import { useUpload } from '../../_context/UploadContext';
 
 function Upload() {
     const { user } = useUser();
@@ -13,6 +14,7 @@ function Upload() {
     const db = getFirestore(app);
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
+    const { clearFiles } = useUpload();
 
     const generateShortId = () => {
         return Math.random().toString(36).substring(2, 8);
@@ -62,6 +64,7 @@ function Upload() {
                         shortUrl: window.location.origin + '/f/' + id
                     });
 
+                    clearFiles();
                     router.push('/file-preview/' + id);
                 } else {
                     alert("Upload failed: " + (data.error || "Unknown error"));
@@ -82,15 +85,15 @@ function Upload() {
     }
 
     return (
-        <div className='p-2 px-8'>
-            <h2 className='text-[24px] text-center m-5'>Start
+        <div className='w-full p-2 sm:px-8'>
+            <h2 className='text-[20px] sm:text-[24px] text-center my-4 sm:my-5 leading-snug'>Start
                 <strong className='text-primary font-extrabold'> Uploading </strong>Files and
                 <strong className='text-primary font-extrabold'> Share</strong> them
             </h2>
             <UploadForm uploadBtnClick={(files) => UploadFile(files)} />
             {uploading && (
-                <div className="flex justify-center w-full mt-4">
-                    <div className="w-200">
+                <div className="flex justify-center w-full mt-4 px-4">
+                    <div className="w-full max-w-xl">
                         <ProgressBar progress={progress} />
                     </div>
                 </div>

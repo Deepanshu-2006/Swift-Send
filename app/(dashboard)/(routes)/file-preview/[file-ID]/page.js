@@ -121,6 +121,9 @@ function FilePreview() {
             if (response.ok) {
                 toast.success("Email Shared Successfully!");
                 setEmail('');
+                if (typeof window !== 'undefined') {
+                    localStorage.removeItem('swift_share_sharing_note');
+                }
             } else {
                 // Handle Resend restrictions or custom errors
                 toast.error("Failed to share link via email: " + (data.error?.message || data.error || "Unknown error"));
@@ -151,16 +154,16 @@ function FilePreview() {
     ];
 
     return (
-        <div className="p-5 px-8 max-w-5xl mx-auto">
-            <Link href="/upload" className="inline-flex items-center gap-2 text-gray-500 hover:text-primary transition font-bold mb-6">
+        <div className="w-full px-0 py-4 sm:p-5 sm:px-8 max-w-5xl mx-auto">
+            <Link href="/upload" className="inline-flex items-center gap-2 text-gray-500 hover:text-primary transition font-bold mb-6 px-4 sm:px-0">
                 <ArrowLeft className="w-5 h-5" />
                 Go Back to Upload
             </Link>
 
-            <div className="flex flex-col md:flex-row items-stretch gap-10 p-8 border border-gray-200 bg-white rounded-2xl shadow-xl animate-fade-in-up">
+            <div className="w-full flex flex-col md:flex-row items-stretch gap-6 md:gap-10 p-4 sm:p-8 border border-gray-200 bg-white rounded-2xl shadow-xl animate-fade-in-up">
                 
                 {/* Left Column: File Details Card */}
-                <div className="flex flex-col p-6 bg-slate-50 border border-slate-150 rounded-xl flex-1 text-center min-w-[280px]">
+                <div className="flex flex-col p-4 sm:p-6 bg-slate-50 border border-slate-150 rounded-xl flex-1 text-center w-full min-w-0 md:min-w-[280px]">
                     <div className="w-24 h-24 relative mb-4 mx-auto">
                         <Image 
                             src="/folder.png" 
@@ -218,11 +221,11 @@ function FilePreview() {
                                 type="text" 
                                 readOnly 
                                 value={fileInfo?.shortUrl || ''}
-                                className="bg-transparent outline-none flex-1 text-sm text-gray-700 select-all pr-2"
+                                className="bg-transparent outline-none flex-1 text-sm text-gray-700 select-all pr-2 min-w-0"
                             />
                             <button 
                                 onClick={copyToClipboard}
-                                className="p-2 bg-slate-100 hover:bg-slate-200 rounded-md transition text-primary"
+                                className="p-2 bg-slate-100 hover:bg-slate-200 rounded-md transition text-primary shrink-0"
                             >
                                 {copied ? <Check className="w-4.5 h-4.5 text-green-600 animate-scale-up" /> : <Copy className="w-4.5 h-4.5" />}
                             </button>
@@ -245,20 +248,20 @@ function FilePreview() {
                         </label>
 
                         {isPasswordEnabled && (
-                            <div className="flex items-center gap-2 mt-2 animate-fade-in-up">
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 mt-2 animate-fade-in-up">
                                 <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg p-2.5 shadow-sm flex-1">
-                                    <Key className="w-4.5 h-4.5 text-gray-400" />
+                                    <Key className="w-4.5 h-4.5 text-gray-400 shrink-0" />
                                     <input 
                                         type="password" 
                                         placeholder="Set custom password..."
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="outline-none flex-1 text-sm bg-transparent"
+                                        className="outline-none flex-1 text-sm bg-transparent min-w-0"
                                     />
                                 </div>
                                 <button 
                                     onClick={savePassword}
-                                    className="bg-primary hover:bg-blue-600 text-white font-bold px-5 py-2.5 text-sm rounded-lg shadow-sm transition"
+                                    className="bg-primary hover:bg-blue-600 text-white font-bold px-5 py-2.5 text-sm rounded-lg shadow-sm transition w-full sm:w-auto shrink-0"
                                 >
                                     Save
                                 </button>
@@ -268,22 +271,27 @@ function FilePreview() {
 
                     {/* 3. Share Email */}
                     <div className="border-t border-slate-100 pt-5">
-                        <label className="text-sm font-bold text-gray-600 block mb-2">Send Link via Email</label>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-1">
+                            <label className="text-sm font-bold text-gray-600">Send Link via Email</label>
+                            <Link href={`/settings?redirect=/file-preview/${fileId}`} className="text-xs text-primary hover:text-blue-600 transition font-bold">
+                                Want to add a custom message? Click here
+                            </Link>
+                        </div>
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
                             <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg p-2.5 shadow-sm flex-1">
-                                <Mail className="w-4.5 h-4.5 text-gray-400" />
+                                <Mail className="w-4.5 h-4.5 text-gray-400 shrink-0" />
                                 <input 
                                     type="email" 
                                     placeholder="recipient@email.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="outline-none flex-1 text-sm bg-transparent"
+                                    className="outline-none flex-1 text-sm bg-transparent min-w-0"
                                 />
                             </div>
                             <button 
                                 disabled={sendingEmail}
                                 onClick={sendEmail}
-                                className="bg-primary hover:bg-blue-600 disabled:bg-blue-300 text-white font-bold px-5 py-2.5 text-sm rounded-lg shadow-sm transition"
+                                className="bg-primary hover:bg-blue-600 disabled:bg-blue-300 text-white font-bold px-5 py-2.5 text-sm rounded-lg shadow-sm transition w-full sm:w-auto shrink-0"
                             >
                                 {sendingEmail ? 'Sending...' : 'Send'}
                             </button>
