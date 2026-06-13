@@ -12,8 +12,9 @@ export async function POST(req: Request) {
             return Response.json({ error: 'Recipient email is required' }, { status: 400 });
         }
 
+        const senderEmail = process.env.SENDER_EMAIL || 'onboarding@resend.dev';
         const { data, error } = await resend.emails.send({
-            from: 'SwiftSend <onboarding@resend.dev>', // Resend free tier restriction
+            from: `SwiftSend <${senderEmail}>`,
             to: [emailToSend],
             subject: `${userName || 'Someone'} shared a file with you!`,
             react: EmailTemplate({

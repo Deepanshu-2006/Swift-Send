@@ -86,7 +86,7 @@ export default function Page() {
                 </section>
 
                 {/* Right side: SignUp components */}
-                <section className="w-full lg:w-1/2 h-full flex flex-col justify-between p-6 sm:p-8 bg-white/30 backdrop-blur-sm lg:bg-transparent overflow-hidden">
+                <section className="w-full lg:w-1/2 h-full flex flex-col justify-between p-6 sm:p-8 bg-white/30 backdrop-blur-sm lg:bg-transparent overflow-y-auto">
                     {/* Top bar: home and mobile logo */}
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-3 lg:hidden">
