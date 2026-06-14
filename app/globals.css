@@ -9,6 +9,17 @@
     color: #000000; 
   }
 }
+
+/* Clerk Custom Styles Overrides to prevent horizontal scrolling and clipping */
+.cl-socialButtonsBlockButton {
+  overflow: visible !important;
+}
+.cl-socialButtonsIconButton {
+  overflow: visible !important;
+}
+.cl-socialButtons {
+  overflow: visible !important;
+}
 @theme {
   --color-primary: #007dfc;
   --color-secondary: #e8f0fe;

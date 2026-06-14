@@ -7,7 +7,7 @@ function Hero() {
     return (
         <div id="home">
             <section className="lg:grid lg:h-screen lg:place-content-center">
-                <div className="mx-auto w-screen max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32">
+                <div className="mx-auto w-full max-w-7xl px-4 pt-28 pb-16 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32">
                     <div className="max-w-prose text-left">
                         <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl font-serif ">
                             <strong className="text-primary"> Upload, Save  </strong>

@@ -66,10 +66,10 @@ function Header() {
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 flex items-center ${
         isScrolled 
           ? 'bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm h-16 mx-0' 
-          : 'bg-transparent border-b border-transparent h-18 ml-10 mr-6'
+          : 'bg-transparent border-b border-transparent h-18 md:ml-10 md:mr-6 ml-0 mr-0'
       }`}>
         {!isScrolled && (
-          <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_2px,transparent_2px),linear-gradient(to_bottom,#8080800a_2px,transparent_2px)] bg-size-[14px_24px] rounded-r-2xl"></div>
+          <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_2px,transparent_2px),linear-gradient(to_bottom,#8080800a_2px,transparent_2px)] bg-size-[14px_24px] md:rounded-r-2xl rounded-none"></div>
         )}
         <div className="flex h-full w-full items-center justify-between gap-8 px-4 sm:px-6 lg:pl-8 lg:pr-4">
 
@@ -140,10 +140,10 @@ function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-              <div className="sm:flex sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-4">
 
                 <Show when="signed-out">
-                  <Link href="/sign-in" className="relative inline-block text-lg group">
+                  <Link href="/sign-in" className="hidden sm:relative sm:inline-block text-lg group">
                     <span className="relative z-10 block px-5 py-3 overflow-hidden font-bold leading-tight text-primary transition-colors duration-300 ease-out border-2 border-primary rounded-lg group-hover:text-white">
                       <span className="absolute inset-0 w-full h-full px-5 py-3 rounded-lg bg-gray-50"></span>
                       <span className="absolute left-0 w-48 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-primary group-hover:-rotate-180 ease"></span>
@@ -154,7 +154,7 @@ function Header() {
                 </Show>
 
                 <Show when="signed-in">
-                  <div className="ml-8 mt-1 flex scale-155 items-end origin-right mr-3">
+                  <div className="ml-2 sm:ml-8 mt-1 flex scale-125 sm:scale-155 items-end origin-right mr-1 sm:mr-3">
                     <UserButton afterSignOutUrl="/" />
                   </div>
                 </Show>
